@@ -1,4 +1,4 @@
-version: '3'
+version: '3'  # You must to customize it for your own
 
 services:
 
