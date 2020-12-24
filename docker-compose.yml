@@ -1,0 +1,174 @@
+version: '3'
+
+services:
+
+        certbot:
+
+                build: ./certbot
+                restart: always
+                expose:
+
+                        - "80"
+                        - "443"
+
+                volumes:
+
+                        - ./certbot/config:/etc/letsencrypt
+                        - ./certbot/ssl:/etc/ssl
+                        - ./certbot/logs/:/var/log/letsencrypt/
+
+                environment:
+
+                        TZ:
+
+                links:
+
+                        - mysql
+
+        mysql:
+
+                image: mariadb
+                restart: always
+                expose:
+
+                        - "3306"
+
+                volumes:
+
+                        - ./mysql/config:/etc/mysql
+                        - ./mysql/database:/var/lib/mysql
+                        - ./mysql/logs:/var/log/mysql
+
+                environment:
+
+                        MYSQL_HOSTNAME: mysql
+                        MYSQL_ROOT_PASSWORD:
+                        MYSQL_DATABASE:
+                        MYSQL_USER:
+                        MYSQL_PASSWORD:
+                        TZ:
+
+        nginx:
+
+                image: nginx:latest
+                restart: always
+                ports:
+
+                        - "80:80"
+                        - "443:443"
+
+                volumes:
+
+                        - ./certbot/config/:/etc/letsencrypt/
+                        - ./nginx/config:/etc/nginx
+                        - ./nginx/conf.d:/etc/nginx/conf.d
+                        - ./nginx/htaccess:/usr/local/nginx/conf
+                        - ./nginx/logs:/var/log/nginx
+                        - ./web:/var/www
+
+                environment:
+
+                        - TZ=
+
+                links:
+
+                        - certbot
+                        - mysql
+                        - mysql:mysql
+                        - php
+                        - phpmyadmin
+                        - postfix
+
+                depends_on:
+
+                        - php 
+                        - phpmyadmin
+
+        php:
+
+                build: ./php
+                restart: always
+                expose:
+
+                        - "9000"
+
+                volumes:
+
+                        - ./certbot/config/:/etc/letsencrypt/
+                        - ./php/ssmtp:/etc/ssmtp
+                        - ./php/fpm:/usr/local/etc
+                        - ./php/config:/usr/local/etc/php
+                        - ./php/logs:/var/log/php
+                        - ./web:/var/www
+
+                environment:
+
+                        - TZ=
+                links:
+
+                        - certbot
+                        - mysql
+                        - mysql:mysql
+                        - postfix
+
+                depends_on:
+
+                        - mysql
+
+        phpmyadmin:
+
+                image: phpmyadmin/phpmyadmin
+                restart: always
+                expose:
+
+                        - "80"
+
+                volumes:
+
+                        - ./phpmyadmin/apache2:/etc/apache2
+                        - ./phpmyadmin/config:/etc/phpmyadmin
+                      # - ./phpmyadmin/html:/var/www/html (make copying with crontab)
+                        - ./phpmyadmin/php:/usr/local/etc/php
+                        - ./phpmyadmin/logs:/var/log/apache2
+
+                environment:
+
+                        PMA_HOST: mysql
+                        MYSQL_USERNAME:
+                        MYSQL_PASSWORD:
+                        UPLOAD_LIMIT:
+                        TZ:
+
+                links:
+
+                        - certbot
+                        - mysql
+                        - mysql:mysql
+                        - php
+
+        postfix:
+
+                image: catatnight/postfix
+                restart: always
+                expose:
+
+                        - "25"
+
+                volumes:
+
+                        - ./postfix/config/:/etc/postfix/
+                        - ./postfix/domainkeys:/etc/opendkim/domainkeys
+                      # - ./postfix/logs:/var/log (make copying with crontab)
+                        - ./postfix/mail:/var/mail
+
+                environment:
+
+                        - maildomain=
+                        - smtp_user=
+                        - TZ=
+
+                links:
+
+                        - certbot
+                        - mysql
+                        - mysql:mysql
