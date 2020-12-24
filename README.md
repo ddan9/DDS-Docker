@@ -1,3 +1,3 @@
 # DDS-Docker
 
-dan9_docker_stack-docker
+dan9_docker_stack
