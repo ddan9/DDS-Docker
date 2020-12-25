@@ -12,15 +12,13 @@
 
 	$message = wordwrap($message, 70, "\r\n");
 
-	echo " Begin to sending ";
+	echo "Sending: ";
 
 	if (mail($to, $subject, $message, $headers)) 
 
 	{
 
-		echo " Sent ";
-
-		echo " Message was sent ";
+		echo "Message was sent \n";
 
 	} 
 
@@ -28,7 +26,7 @@
 
 	{
 
-		echo " Error ";
+		echo "Error \n";
 
 	}
 
