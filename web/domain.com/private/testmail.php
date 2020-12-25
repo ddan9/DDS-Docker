@@ -1,25 +1,35 @@
 <?php
+
 	$test_text=htmlspecialchars($_REQUEST['text']);
-$to      = 'username@domain.com';
-$subject = 'the subject test';
+	$to      = 'username@domain.com';
+	$subject = 'the subject test';
 
-$headers = 'From: username@domain.com' . "\r\n" .
-    'Reply-To: username@domain.com' . "\r\n" .
-    'X-Mailer: PHP/' . phpversion();
+	$headers = 'From: username@domain.com' . "\r\n" .
+		'Reply-To: username@domain.com' . "\r\n" .
+		'X-Mailer: PHP/' . phpversion();
 
-$message = "Line 1 Во первых строках своего письма хочу сказать вот что...\r\nLine 2 Во второй сроке значит вот как\r\nLine 3 Ну а третья строка всем строкам строка, только сказать то уже и нечего :) Такой вот тест\r\n А вот текст для теста: ".$test_text."";
+	$message = " Line 1...\r\nLine 2...\r\nLine 3... :) There was a mailtest\r\n Sample text ".$test_text."";
 
-$message = wordwrap($message, 70, "\r\n");
+	$message = wordwrap($message, 70, "\r\n");
 
-echo"Начинаем отправку";
+	echo " Begin to sending ";
 
-if (mail($to, $subject, $message, $headers)) {
-    echo "Sent";
-    echo"<BR>    функция отработала!<br>отправили!!<br>";
-  } else {
-    echo "Error";
-  }
+	if (mail($to, $subject, $message, $headers)) 
 
+	{
+
+		echo " Sent ";
+
+		echo " Message was sent ";
+
+	} 
+
+	else 
+
+	{
+
+		echo " Error ";
+
+	}
 
 ?>
-
