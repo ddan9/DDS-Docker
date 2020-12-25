@@ -1,6 +1,6 @@
 # DDS-Docker
 
-dan9_docker_stack
+ddan9_docker_stack
 
 There will be something here
 
