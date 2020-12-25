@@ -1,4 +1,4 @@
-version: '3'  # You must to customize it for your own
+version: '3'
 
 services:
 
@@ -19,7 +19,7 @@ services:
 
                 environment:
 
-                        TZ:
+                        TZ: Europe/London
 
                 links:
 
@@ -42,11 +42,11 @@ services:
                 environment:
 
                         MYSQL_HOSTNAME: mysql
-                        MYSQL_ROOT_PASSWORD:
-                        MYSQL_DATABASE:
-                        MYSQL_USER:
-                        MYSQL_PASSWORD:
-                        TZ:
+                        MYSQL_ROOT_PASSWORD: password
+                        MYSQL_DATABASE: databasename
+                        MYSQL_USER: username
+                        MYSQL_PASSWORD: password
+                        TZ: Europe/London
 
         nginx:
 
@@ -68,7 +68,7 @@ services:
 
                 environment:
 
-                        - TZ=
+                        - TZ=Europe/London
 
                 links:
 
@@ -103,7 +103,7 @@ services:
 
                 environment:
 
-                        - TZ=
+                        - TZ=Europe/London
                 links:
 
                         - certbot
@@ -134,10 +134,10 @@ services:
                 environment:
 
                         PMA_HOST: mysql
-                        MYSQL_USERNAME:
-                        MYSQL_PASSWORD:
-                        UPLOAD_LIMIT:
-                        TZ:
+                        MYSQL_USERNAME: username
+                        MYSQL_PASSWORD: password
+                        UPLOAD_LIMIT: 50M
+                        TZ: Europe/London
 
                 links:
 
@@ -163,9 +163,9 @@ services:
 
                 environment:
 
-                        - maildomain=
-                        - smtp_user=
-                        - TZ=
+                        - maildomain=domain.com
+                        - smtp_user=username
+                        - TZ=Europe/London
 
                 links:
 
