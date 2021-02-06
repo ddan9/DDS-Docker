@@ -1,5 +1,9 @@
 # DDS-Docker
 
+> ! Not ready for use. Yet
+
+You can test it on your own
+
 ddan9_docker_stack
 
 There will be something here
