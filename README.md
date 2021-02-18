@@ -1,10 +1,10 @@
-# DDS-Docker
+# EDS-Docker
 
 > ! Not ready for use. Yet
 
 You can test it on your own
 
-ddan9_docker_stack
+Enchanced Docker Stack
 
 There will be something here
 
