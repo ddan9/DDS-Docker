@@ -128,6 +128,7 @@ services:
                         - ./phpmyadmin/apache2:/etc/apache2
                         - ./phpmyadmin/config:/etc/phpmyadmin
                       # - ./phpmyadmin/html:/var/www/html (make copying with crontab)
+                        - ./phpmyadmin/themes:/var/www/html/themes
                         - ./phpmyadmin/php:/usr/local/etc/php
                         - ./phpmyadmin/logs:/var/log/apache2
 
